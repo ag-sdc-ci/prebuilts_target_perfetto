@@ -1,0 +1,15 @@
+shadow prebuilt repo: perfetto (target)
+  upstream: external/perfetto
+  source: platform/external/perfetto @ android-14.0.0_r67
+  build: bp2ninja two-phase (host protoc plugins -> target libs), aprotoc = protoc-21 (ABI-paired)
+  api-level: 34 (branch 34-20261023)
+  blobs: org.blisslabs.ag.perfetto.apex, org.blisslabs.ag.perfetto.dev.apex
+  modules: libperfetto_c (shared, libandroid_runtime dep),
+           libperfetto_client_experimental (static, frameworks/native),
+           perfetto_trace_protos (static), prebuilt_apex pair,
+           perfetto_protos_src filegroup
+  protos: protos/ kept for tree build-time codegen (javastream, protolog)
+  gaps: perfetto_trace-full (host java lib, protologtool dep) not prebuilt yet;
+        frameworks/base/Android.bp :perfetto_trace_javastream_protos colon-ref
+        needs a tree-side patch (pre-existing unresolved dep)
+  date: 2026-10-23

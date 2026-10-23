@@ -1,0 +1,89 @@
+// Prebuilt shadow Blueprint for external/perfetto
+// Built from APEX packages: perfetto / perfetto.dev (org.blisslabs.ag.perfetto)
+// Source: platform/external/perfetto @ android-14.0.0_r67 (bp2ninja two-phase)
+
+package {
+    default_applicable_licenses: ["external_perfetto_license"],
+}
+
+license {
+    name: "external_perfetto_license",
+    visibility: ["//visibility:public"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+        "SPDX-license-identifier-BSD",
+        "SPDX-license-identifier-CC-BY",
+    ],
+    license_text: [
+        "LICENSE",
+    ],
+}
+
+// Framework runtime dep: libandroid_runtime shared_libs
+cc_prebuilt_library_shared {
+    name: "libperfetto_c",
+    export_include_dirs: ["include"],
+    shared_libs: ["liblog"],
+    apex_available: ["//apex_available:platform"],
+    visibility: ["//visibility:public"],
+    prefer: true,
+    srcs: ["lib/libperfetto_c.so"],
+}
+
+// frameworks/native static client (surfaceflinger, inputflinger, gpuservice)
+cc_prebuilt_library_static {
+    name: "libperfetto_client_experimental",
+    export_include_dirs: ["include"],
+    visibility: ["//visibility:public"],
+    prefer: true,
+    srcs: ["lib/libperfetto_client_experimental.a"],
+}
+
+// perfetto protozero/lite trace protos (static)
+cc_prebuilt_library_static {
+    name: "perfetto_trace_protos",
+    export_include_dirs: ["include"],
+    visibility: ["//visibility:public"],
+    prefer: true,
+    srcs: ["lib/perfetto_trace_protos.a"],
+}
+
+prebuilt_apex {
+    name: "org.blisslabs.ag.perfetto",
+    apex_name: "perfetto",
+    source_apex_name: "perfetto",
+    arch: {
+        x86_64: {
+            src: "org.blisslabs.ag.perfetto.apex",
+        },
+    },
+    filename: "org.blisslabs.ag.perfetto.apex",
+    prefer: true,
+    installable: true,
+}
+
+prebuilt_apex {
+    name: "org.blisslabs.ag.perfetto.dev",
+    apex_name: "perfetto.dev",
+    source_apex_name: "perfetto.dev",
+    arch: {
+        x86_64: {
+            src: "org.blisslabs.ag.perfetto.dev.apex",
+        },
+    },
+    filename: "org.blisslabs.ag.perfetto.dev.apex",
+    prefer: true,
+    installable: false,
+}
+
+// Proto sources for build-time codegen in the consuming tree
+// (framework-javastream-protos, protologtool, perfetto_trace-full)
+filegroup {
+    name: "perfetto_protos_src",
+    path: "protos",
+    srcs: [
+        "protos/perfetto/trace/perfetto_trace.proto",
+        "protos/perfetto/config/perfetto_config.proto",
+    ],
+    visibility: ["//visibility:public"],
+}
