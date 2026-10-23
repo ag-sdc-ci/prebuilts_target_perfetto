@@ -8,8 +8,15 @@ shadow prebuilt repo: perfetto (target)
            libperfetto_client_experimental (static, frameworks/native),
            perfetto_trace_protos (static), prebuilt_apex pair,
            perfetto_protos_src filegroup
-  protos: protos/ kept for tree build-time codegen (javastream, protolog)
-  gaps: perfetto_trace-full (host java lib, protologtool dep) not prebuilt yet;
-        frameworks/base/Android.bp :perfetto_trace_javastream_protos colon-ref
-        needs a tree-side patch (pre-existing unresolved dep)
+  codegen (thin slice, source-gen from shipped protos/):
+           perfetto_trace_javastream_protos (gensrcs -> framework.jar srcs;
+             -I points at prebuilts/target/external/perfetto),
+           perfetto_trace_java_protos (java_library lite, WindowManager Shell),
+           perfetto_trace-full (java_library_host full, protologtool; java 11)
+           tools resolve in-tree: aprotoc + libprotobuf-internal-protos from
+             prebuilts/external/protobuf dual slice; protoc-gen-javastream
+             builds from frameworks/base/tools/streaming_proto (static
+             libprotoc host slice from android-host-protobuf)
+  deliberately omitted: perfetto_metrics-full / perfetto_config-full /
+           perfetto_config-lite (no framework-scope consumers)
   date: 2026-10-23
