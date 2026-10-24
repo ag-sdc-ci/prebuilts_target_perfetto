@@ -33,6 +33,7 @@ cc_prebuilt_library_shared {
 // frameworks/native static client (surfaceflinger, inputflinger, gpuservice)
 cc_prebuilt_library_static {
     name: "libperfetto_client_experimental",
+    host_supported: true,
     export_include_dirs: ["include"],
     visibility: ["//visibility:public"],
     prefer: true,
