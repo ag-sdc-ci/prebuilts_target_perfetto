@@ -12,11 +12,12 @@ shadow prebuilt repo: perfetto (target)
            perfetto_trace_javastream_protos (gensrcs -> framework.jar srcs;
              -I points at prebuilts/target/external/perfetto),
            perfetto_trace_java_protos (java_library lite, WindowManager Shell),
-           perfetto_trace-full (java_library_host full, protologtool; java 11)
+           perfetto_trace-full (java_library_host full, protologtool; java 11),
+           perfetto_config-full (java_library_host full, CtsStatsdHostTestCases; java 11)
            tools resolve in-tree: aprotoc + libprotobuf-internal-protos from
              prebuilts/external/protobuf dual slice; protoc-gen-javastream
              builds from frameworks/base/tools/streaming_proto (static
              libprotoc host slice from android-host-protobuf)
-  deliberately omitted: perfetto_metrics-full / perfetto_config-full /
+  deliberately omitted: perfetto_metrics-full /
            perfetto_config-lite (no framework-scope consumers)
   date: 2026-10-23

@@ -347,3 +347,16 @@ java_library_host {
     // b/267831518: Pin tradefed and dependencies to Java 11.
     java_version: "11",
 }
+
+java_library_host {
+    name: "perfetto_config-full",
+    proto: {
+        type: "full",
+    },
+    srcs: [
+        "protos/perfetto/config/perfetto_config.proto",
+    ],
+    // b/267831518: Pin tradefed and dependencies to Java 11.
+    java_version: "11",
+}
+
