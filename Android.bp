@@ -63,20 +63,6 @@ prebuilt_apex {
     installable: true,
 }
 
-prebuilt_apex {
-    name: "org.blisslabs.ag.perfetto.dev",
-    apex_name: "perfetto.dev",
-    source_apex_name: "perfetto.dev",
-    arch: {
-        x86_64: {
-            src: "org.blisslabs.ag.perfetto.dev.apex",
-        },
-    },
-    filename: "org.blisslabs.ag.perfetto.dev.apex",
-    prefer: true,
-    installable: false,
-}
-
 // Proto sources for build-time codegen in the consuming tree
 // (framework-javastream-protos, protologtool, perfetto_trace-full)
 filegroup {
